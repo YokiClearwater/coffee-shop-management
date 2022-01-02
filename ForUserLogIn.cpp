@@ -14,13 +14,13 @@ main()
     // functions
     void displayAdminPanelMenu();
 
-    coffee_list *menu;
-    menu = makeCoffeeList();
-    get_coffee_menu(menu);
+    // coffee_list *menu;
+    // menu = makeCoffeeList();
+    // get_coffee_menu(menu);
 
-    List *user;
-    user = makeEmptyList();
-    readToList(user);
+    // List *user;
+    // user = makeEmptyList();
+    // readToList(user);
     // displayList(user);
     int choice;
     do
@@ -33,19 +33,19 @@ main()
         {
         case 1:
         {
-            loginOrSignup();
-            while (choice >= 1 && choice <= 2)
-            {
-                if (choice == 1)
-                {
-                    LogInUser(user, menu);
-                }
-                else if (choice == 2)
-                {
-                    signUp(user, menu);
-                }
-                choice = loginOrSignup();
-            }
+            // loginOrSignup();
+            // while (choice >= 1 && choice <= 2)
+            // {
+            //     if (choice == 1)
+            //     {
+            //         LogInUser(user, menu);
+            //     }
+            //     else if (choice == 2)
+            //     {
+            //         signUp(user, menu);
+            //     }
+            //     choice = loginOrSignup();
+            // }
         }
         break;
         case 2:
@@ -88,9 +88,7 @@ main()
             // delete coffee
             case 4:
             {
-                coffeeList *ls = new coffeeList();
-                createCoffeeList();
-                readFromFile(ls);
+                readFromFile(coffeelist);
                 // displayCoffee(ls);
                 bestSellList *bestsell = new bestSellList();
                 createbestSellList();
@@ -98,11 +96,11 @@ main()
                 cout << "\t-------------Deleting coffee-------------" << endl;
                 cout << "Please enter the ID: ";
                 cin >> id;
-                deleteCoffeeListByID(ls, id);
+                deleteCoffeeListByID(coffeelist, id);
+                writeNewFile(coffeelist);
                 readBestSell(bestsell);
                 deleteBestSellListByID(bestsell, id);
                 bestSellWriteFile(bestsell);
-                writeNewFile(ls);
                 // displayCoffee(ls);
             }
             break;
