@@ -72,6 +72,14 @@ void bestSellInsertBegin(bestSellList *ls, string coffeeId, int qty = 1)
         ls->n = ls->n + 1;
     }
 }
+void displayBestSell(bestSellList *ls){
+    bestSellElement *node = new bestSellElement();
+    node = ls->head; 
+    while(node !=NULL){
+        cout<<node->coffeeId<<setw(20)<<node->qty<<endl;
+        node = node->next;
+    }
+}
 void bestSellInsertEnd(bestSellList *ls, string coffeeId, int qty)
 {
     bestSellElement *node = new bestSellElement();
@@ -98,11 +106,11 @@ void bestSellWriteFile(bestSellList *ls)
     {
         if (sale->next != NULL)
         {
-            file << sale->coffeeId << setw(10) << sale->qty << "\n";
+            file << sale->coffeeId << " " << sale->qty << "\n";
         }
         else
         {
-            file << sale->coffeeId << setw(10) << sale->qty;
+            file << sale->coffeeId << " " << sale->qty;
         }
         sale = sale->next;
     }
@@ -152,7 +160,7 @@ void deleteBestSellListByID(bestSellList *ls, string id)
 
     if (flag == 1)
     {
-        cout << "Deleted the item with ID of " << id << endl;
+        cout << "Best sell Deleted the item with ID of " << id << endl;
     }
     else
     {

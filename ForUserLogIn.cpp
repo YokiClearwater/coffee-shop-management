@@ -5,6 +5,8 @@
 #include <fstream>
 #include <string.h>
 #include "userLog.h"
+#include "cafe.h"
+#include "sales.h"
 using namespace std;
 
 main()
@@ -48,45 +50,82 @@ main()
         break;
         case 2:
         {
+            coffeeList *coffeelist = new coffeeList();
+            createCoffeeList();
             int choice2;
             displayAdminPanelMenu();
             cin >> choice2;
             switch (choice2)
             {
-                //hllo
+                // hllo
             // create coffee
             case 1:
             {
+                coffeeList *ls = new coffeeList();
+                createCoffeeList();
+                readFromFile(ls);
+                createCoffees(ls);
             }
             break;
             // read coffee
             case 2:
             {
+                readFromFile(coffeelist);
+                displayCoffee(coffeelist);
             }
             break;
             // edit coffee
             case 3:
             {
+                coffeeList *ls = new coffeeList();
+                createCoffeeList();
+                readFromFile(ls);
+                displayCoffee(ls);
+                editListByID(ls);
+                writeNewFile(ls);
             }
             break;
             // delete coffee
             case 4:
             {
+                coffeeList *ls = new coffeeList();
+                createCoffeeList();
+                readFromFile(ls);
+                // displayCoffee(ls);
+                bestSellList *bestsell = new bestSellList();
+                createbestSellList();
+                string id;
+                cout << "\t-------------Deleting coffee-------------" << endl;
+                cout << "Please enter the ID: ";
+                cin >> id;
+                deleteCoffeeListByID(ls, id);
+                readBestSell(bestsell);
+                deleteBestSellListByID(bestsell, id);
+                bestSellWriteFile(bestsell);
+                writeNewFile(ls);
+                // displayCoffee(ls);
             }
             break;
             // best-seller
             case 5:
             {
+                readFromFile(coffeelist);
+                bestSellList *bestsell = new bestSellList();
+                createbestSellList();
+                findByID(coffeelist, returnBestSeller(bestsell));
             }
             break;
             // total cash
             case 6:
             {
+                saleList *salelist = new saleList();
+                createSaleList();
+                saleWriteTotalCash(salelist);
             }
             break;
             case 7:
             {
-                        }
+            }
             break;
             }
         }

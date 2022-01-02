@@ -4,7 +4,6 @@ using namespace std;
 struct saleElement
 {
     string userId, coffeeId;
-    int saleId;
     float coffeePrice;
     int qty;
     saleElement *next;
@@ -25,10 +24,10 @@ saleList *createSaleList()
     return ls;
 }
 
-void salesInsertBegin(saleList *ls, int saleId, string userid, string coffeeid, float coffeePrice, int qty)
+void salesInsertBegin(saleList *ls, string userid, string coffeeid, float coffeePrice, int qty)
 {
     saleElement *node = new saleElement();
-    node->saleId = saleId;
+    // node->saleId = saleId;
     node->userId = userid;
     node->coffeeId = coffeeid;
     node->coffeePrice = coffeePrice;
@@ -44,14 +43,14 @@ void salesInsertBegin(saleList *ls, int saleId, string userid, string coffeeid, 
     ls->head = node;
     ls->n = ls->n + 1;
 }
-void salesInsertEnd(saleList *ls, int saleId, string userid, string coffeeid, float coffeePrice, int qty)
+void salesInsertEnd(saleList *ls, string userid, string coffeeid, float coffeePrice, int qty)
 {
     saleElement *node = new saleElement();
     if (ls->n == 0)
-        salesInsertBegin(ls, saleId, userid, coffeeid, coffeePrice, qty);
+        salesInsertBegin(ls, userid, coffeeid, coffeePrice, qty);
     else
     {
-        node->saleId = saleId;
+        // node->saleId = saleId;
         node->userId = userid;
         node->coffeeId = coffeeid;
         node->coffeePrice = coffeePrice;
@@ -63,7 +62,7 @@ void salesInsertEnd(saleList *ls, int saleId, string userid, string coffeeid, fl
         ls->n = ls->n + 1;
     }
 }
-void writeTotalCash(saleList *ls)
+void saleWriteTotalCash(saleList *ls)
 {
     saleElement *sale = new saleElement();
     fstream file;
@@ -71,11 +70,11 @@ void writeTotalCash(saleList *ls)
     string userid, coffeeid;
     float coffeeprice;
     int qty;
-    file.open("sale.txt", ios::in);
+    file.open("Sale history.txt", ios::in);
     while (!file.eof())
     {
-        file >> saleId >> userid >> coffeeid >> coffeeprice >> qty;
-        salesInsertEnd(ls, saleId, userid, coffeeid, coffeeprice, qty);
+        file >> userid >> coffeeid >> coffeeprice >> qty;
+        salesInsertEnd(ls, userid, coffeeid, coffeeprice, qty);
     }
     file.close();
     sale = ls->head;
@@ -85,7 +84,7 @@ void writeTotalCash(saleList *ls)
         totalCash += sale->coffeePrice * sale->qty;
         sale = sale->next;
     }
-    cout << "The total sales in cash is: " << totalCash << endl;
+    cout << "The total sales in cash is: $" << totalCash << endl;
 }
 void saleWriteFile(saleList *ls)
 {
@@ -95,37 +94,15 @@ void saleWriteFile(saleList *ls)
     file.open("sale.txt", ios::app);
     while (sale != NULL)
     {
-        if(sale->next !=NULL){
-            file << sale->saleId << " " << sale->userId << " " << sale->coffeeId << " " << sale->coffeePrice << " " << sale->qty<<"\n";
+        if (sale->next != NULL)
+        {
+            file << sale->userId << " " << sale->coffeeId << " " << sale->coffeePrice << " " << sale->qty << "\n";
         }
-        else{
-            file << sale->saleId << " " << sale->userId << " " << sale->coffeeId << " " << sale->coffeePrice << " " << sale->qty;
+        else
+        {
+            file << sale->userId << " " << sale->coffeeId << " " << sale->coffeePrice << " " << sale->qty;
         }
         sale = sale->next;
     }
     file.close();
-}
-void saleWriteTotalCash(saleList *ls)
-{
-    saleElement *sale = new saleElement();
-    fstream file;
-    int saleid;
-    string userid, coffeeid;
-    float coffeeprice;
-    int qty;
-    file.open("sale.txt", ios::in);
-    while (!file.eof())
-    {
-        file >> saleid >> userid >> coffeeid >> coffeeprice >> qty;
-        salesInsertEnd(ls, saleid, userid, coffeeid, coffeeprice, qty);
-    }
-    file.close();
-    sale = ls->head;
-    float totalCash = 0;
-    while (sale != NULL)
-    {
-        totalCash += sale->coffeePrice * sale->qty;
-        sale = sale->next;
-    }
-    cout << "The total sales in cash is: "<<totalCash<<endl;
 }
