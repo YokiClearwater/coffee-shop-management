@@ -1,0 +1,7 @@
+1	Latte	3.5
+2	Mocha	2
+3	Cappuccino	4
+4	Milk	2
+5	Doppio	3
+6	Tea	1
+7	Juice	2.33
