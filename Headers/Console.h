@@ -3,6 +3,13 @@
 #include <thread>
 using namespace std;
 
+#ifdef _WIN32
+#include <conio.h>
+#endif
+#ifdef __unix__
+#include <unistd.h>
+#endif
+
 void clearScreen()
 {
     #ifdef WINDOWS
@@ -41,7 +48,51 @@ void loadingbar(void){
 
 void waitForInput() {
 	do {
-		std::cout << '\n' << "Press a key to continue...";
+		std::cout << '\n' << "\t\tPress a key to continue...";
 		cin.get();
 	} while (cin.get() != '\n');
+}
+
+void errorInputHandling(int *choice) {
+	while (!(cin >> *choice)) {
+		cin.clear();
+		cout << "\t\tBad Entry!!! Input Again: ";
+		while(cin.get() != '\n');
+	}
+}
+
+#ifdef _WIN32
+string getPassword()
+{ 
+    string password;
+    int ch;
+
+    while ( ( ch = getch() ) != '\r' ) {
+        if ( ch == '\b' ) {
+            if ( password.size() > 0 ) {
+                password.erase(password.size() - 1, 1 );
+                cout<< "\b \b";
+            }
+        }
+        else {
+            password.push_back( ch );
+            cout << "*";
+        }
+    }
+
+    cout << "\n";
+
+    return password;
+}
+#endif
+
+void inputPass(string *password, const char *prompt) {
+    #ifdef _WIN32
+    cout << prompt;
+    *password = getPassword();
+    #endif
+    
+    #ifdef __unix__
+    *password = getpass(prompt);
+    #endif
 }

@@ -149,3 +149,97 @@ void createCoffee(coffeeList *ls) {
     insertCoffeeEnd(ls, id, coffeename, price);
     writeCoffeeList(ls);
 }
+
+void updateCoffee(coffeeList *ls, string itemID) {
+    cout << "\t\tEnter ID to Search: ";
+    cin >> itemID;
+
+    coffeeElement *temp = searchItem(ls, itemID);
+    while(temp == NULL) {
+        cout << "\t\tItem Not Found!! Enter ID Again: ";
+        cin >> itemID;
+        temp = searchItem(ls, itemID);
+    }
+
+    string newName;
+    float newPrice;
+    int choice;
+
+    do {
+        cout << "\n\t\t1. Update Name Only" << endl;
+        cout << "\t\t2. Update Price Only" << endl;
+        cout << "\t\t3. Both" << endl;
+        cout << "\t\t4. Back" << endl;
+        cout << "\t\tEnter Choice: ";
+
+        cin >> choice;
+        if(choice == 1) {
+            cout << "\t\tEnter Item Name: ";
+            cin >> newName;
+            temp->name = newName;
+        }
+        else if(choice == 2) {
+            cout << "\t\tEnter Price Name: ";
+            cin >> newPrice;
+            temp->price = newPrice;
+        }
+        else if(choice == 3) {
+            cout << "\t\tEnter Item Name: ";
+            cin >> newName;
+            temp->name = newName;
+            cout << "\t\tEnter Price Name: ";
+            cin >> newPrice;
+            temp->price = newPrice;
+        }
+        else {
+            cout << "\t\tWrong Input" << endl;
+        }
+
+    } while(choice != 4);
+
+    writeCoffeeList(ls);
+}
+
+void deleteCoffee(coffeeList *ls, string itemID) {
+    cout << "\t\tEnter ID to Delete: ";
+    cin >> itemID;
+
+    coffeeElement *del = searchItem(ls, itemID);
+
+    while(del == NULL) {
+        cout << "\t\tNot Found!! Enter ID Again: ";
+        cin >> itemID;
+        del = searchItem(ls, itemID);
+    }
+
+    if (ls->head == NULL || del == NULL)
+        return;
+ 
+    if (ls->head == del)
+        ls->head = del->next;
+    
+    if (del->next != NULL)
+        del->next->prev = del->prev;
+ 
+    if (del->prev != NULL) {
+        del->prev->next = del->next;
+        if(del->next == NULL) {
+            ls->tail = del->prev;
+        }
+    }
+
+    delete del;
+    ls->n = ls->n - 1;
+}
+
+void deleteAllCoffees(coffeeList *ls) {
+    coffeeElement *temp = new coffeeElement();
+    while(ls->head != NULL) {
+        temp = ls->head;
+        ls->head = ls->head->next;
+        delete temp;
+    }
+
+    ls->tail = NULL;
+    ls->n = 0;
+}

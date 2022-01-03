@@ -3,6 +3,8 @@
 #include <string>
 using namespace std;
 
+string salt = "cafe$";
+
 struct UserInfo{
     string userName;
     string pword;
@@ -16,7 +18,7 @@ struct UserList {
     UserInfo *tail;
 };
 
-UserList* makeEmptyList(){
+UserList* createUserList(){
     UserList *ls;
     ls = new UserList;
 
@@ -26,6 +28,7 @@ UserList* makeEmptyList(){
 
     return ls;
 }
+
 void addBegin(UserList *ls, string newName, string newpword){
     UserInfo *user;
     user = new UserInfo;
@@ -77,13 +80,13 @@ void addEnd(UserList *ls, string newName, string newpword){
     }
 }
 
-UserList *readUserInfo(){
+UserList *readUserInfo(string filename){
     string userName, password;
 
     fstream file;
-    file.open("Data/UserInfo.txt");
+    file.open(filename);
 
-    UserList *user = makeEmptyList();
+    UserList *user = createUserList();
 
     while(file >> userName >>password)
     {
@@ -95,9 +98,9 @@ UserList *readUserInfo(){
     return user;
 }
 
-void writeUserInfo(UserList *ls) {
+void writeUserInfo(UserList *ls, string filename) {
     ofstream file;
-    file.open("Data/UserInfo.txt");
+    file.open(filename);
 
     UserInfo *temp = new UserInfo();
     temp = ls->head;
@@ -138,8 +141,11 @@ int loginOrSignup(){
     {
         cout<<"\t\tEnter option 1-3:  ";
         cin >> cc;
+        if(cin.fail()) {
+            errorInputHandling(&cc);
+        }
 
-    }   while(cc<1 || cc>3);
+    }   while(cc < 1 || cc > 3);
 
     return cc;
 }
@@ -147,40 +153,45 @@ int loginOrSignup(){
 void signUp(UserList *ls) {
     string username, password, confirmPass;
     
-        cout << "Enter Username: ";
+        cout << "\t\tEnter Username: ";
         cin >> username;
         UserInfo *checkUsername = searchUserInfo(ls, username);
 
         while(checkUsername != NULL) {
-            cout<<"This user name is already taken." << endl;
+            cout<<"\t\tThis user name is already taken." << endl;
             cout << "\t\tEnter another username: ";
             cin >> username;
             checkUsername = searchUserInfo(ls, username);
         }
 
-
         do {
-            cout << "\t\tCreate your own password: ";
-            cin >> password;
-            cout << "\t\tConfirm password: ";
-            cin >> confirmPass;
+            // cout << "\t\tCreate your own password: ";
+            // cin >> password;
+            inputPass(&password, "\t\tCreate your own password: ");
+            password = SHA256::encrypt(password + salt);
+            // cout << "\t\tConfirm password: ";
+            // cin >> confirmPass;
+            inputPass(&confirmPass, "\t\tConfirm password: ");
+            confirmPass = SHA256::encrypt(confirmPass + salt);
             if (password != confirmPass) {
                 cout << "\t\tPassword Doesn't Match!! Try Again!!" << endl;
             }
         }   while(password != confirmPass);
 
     addEnd(ls, username, password);
-    writeUserInfo(ls);
+    writeUserInfo(ls, "Data/UserInfo.txt");
 }
 
 UserInfo *logIn() {
-    UserList *LL = readUserInfo();
+    UserList *LL = readUserInfo("Data/UserInfo.txt");
     string userName, password;
 
     cout << "\t\tEnter Username: ";
     cin >> userName;
-    cout << "\t\tEnter Password: ";
-    cin >> password;
+    // cout << "\t\tEnter Password: ";
+    // cin >> password;
+    inputPass(&password, "\t\tEnter Password: ");
+    password = SHA256::encrypt(password + salt);
 
     UserInfo *U1 = searchUserInfo(LL, userName);
     while(true) {
@@ -191,11 +202,61 @@ UserInfo *logIn() {
             cout << "\t\tIncorrect Username or Password!! Enter Again!!" << endl;
             cout << "\t\tEnter Username: ";
             cin >> userName;
-            cout << "\t\tEnter Password: ";
-            cin >> password;
+            // cout << "\t\tEnter Password: ";
+            // cin >> password;
+            inputPass(&password, "\t\tEnter Password: ");
+            password = SHA256::encrypt(password + salt);
             U1 = searchUserInfo(LL, userName);
         }
     }
 
     return U1;
+}
+
+void displayRegisteredUser() {
+    UserList *ul = readUserInfo("Data/UserInfo.txt");
+    UserInfo *temp = ul->head;
+
+    cout << "\t\tRegistered Users: " << endl;
+    cout << "\t\t------------------------" << endl;
+    while(temp != NULL) {
+        cout << "\t\t" << temp->userName << endl;
+        temp = temp->next;
+    }
+    cout << endl;
+}
+
+void addAdmin() {
+    UserList *ul = readUserInfo("Data/UserInfo.txt");
+    string name;
+
+    cout << "\t\tEnter Username: ";
+    cin >> name;
+    UserInfo *user = searchUserInfo(ul, name);
+    while(user == NULL) {
+        cout << "\t\tUser not found. Enter Again: ";
+        cin >> name;
+        user = searchUserInfo(ul, name);
+    }
+
+    UserList *adminList = readUserInfo("Data/Admin.txt"); 
+    UserInfo *admin = searchUserInfo(adminList, name);
+    if(admin != NULL) {
+        cout << "\t\tAdmin already existed." << endl;
+        return;
+    }
+    else {
+        addBegin(adminList, user->userName, user->pword);
+        writeUserInfo(adminList, "Data/Admin.txt");
+    }
+}
+
+bool verifyAdmin(string name) {
+    UserList *ul = readUserInfo("Data/Admin.txt");
+
+    UserInfo *user = searchUserInfo(ul, name);
+    if(user != NULL) {
+        return true;
+    }
+    return false;
 }

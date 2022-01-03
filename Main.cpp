@@ -2,28 +2,32 @@
 #include <fstream>
 #include <iomanip>
 #include <string>
+#include "Headers/SHA256.h"
 #include "Headers/Console.h"
 #include "Headers/Login.h"
 #include "Headers/Coffee.h"
+#include "Headers/Sales.h"
 #include "Headers/Menu.h"
+
+
 using namespace std;
 
 int main() {
     int choice;
-    UserList *ul = readUserInfo();
+    UserList *ul = readUserInfo("Data/UserInfo.txt");
 
-    string welcome="***** WELCOME TO COFFEE MANAGEMENT SYSTEM *****";
-    clearScreen();
-    cout<<"\n\t";
-    int n = welcome.size();
-    sleepTime(500);
-    for(int ii = 0; ii < n; ii++)
-    {
-        cout << welcome[ii];
-        sleepTime(70);
-    }
+    // string welcome="***** WELCOME TO COFFEE MANAGEMENT SYSTEM *****";
+    // clearScreen();
+    // cout<<"\n\t";
+    // int n = welcome.size();
+    // sleepTime(500);
+    // for(int ii = 0; ii < n; ii++)
+    // {
+    //     cout << welcome[ii];
+    //     sleepTime(70);
+    // }
 
-    loadingbar();
+    // loadingbar();
 
     do {
         choice = loginOrSignup();
