@@ -139,7 +139,7 @@ int loginOrSignup(){
     sleepTime(200);
     do
     {
-        cout<<"\t\tEnter option 1-3:  ";
+        cout<<"\t\tEnter Option: ";
         cin >> cc;
         if(cin.fail()) {
             errorInputHandling(&cc);
@@ -191,25 +191,24 @@ UserInfo *logIn() {
     cout << "\t\tEnter Username: ";
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     userName = userNameInput();
-    // cout << "\t\tEnter Password: ";
-    // cin >> password;
+
     inputPass(&password, "\t\tEnter Password: ");
     password = SHA256::encrypt(password + salt);
 
     UserInfo *U1 = searchUserInfo(LL, userName);
-    int attempt = 0;
+    int attempt = 0, flag = 5;
     while(true) {
         if(U1 != NULL && password == U1->pword) {
             break;
         }
         else {
-            if(attempt == 3) {
-                cout << "Login Failed, If you are a new User, Please Sign Up";
-                waitForInput();
+            attempt++;
+            if(attempt == flag) {
                 return NULL;
             }
-            attempt++;
             cout << "\t\tIncorrect Username or Password!! Enter Again!!" << endl;
+            cout << "\t\tYou have " << (flag - attempt) << " attempt left." << endl;
+
             cout << "\t\tEnter Username: ";
             userName = userNameInput();
             inputPass(&password, "\t\tEnter Password: ");

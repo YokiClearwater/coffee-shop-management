@@ -28,7 +28,7 @@ int main() {
         cout << welcome[ii] << flush;
         sleepTime(70);
     }
-    
+
     loadingbar();
 
     do {

@@ -32,7 +32,7 @@ void mainMenu(UserInfo *ul) {
                 adminPanel();
             }
             else {
-                cout << "You're not logging in with an administrator account." << endl;
+                cout << "\n\t\tYou're not logging in with an administrator account." << endl;
                 waitForInput();
             }
             clearScreen();
@@ -140,10 +140,10 @@ void adminPanel() {
         cout<<"\n\t";
         cout << "***** Admin Panel *****" << endl;
         sleepTime(200);
-        cout<< "\n\t\t1. Create " << endl;
-        cout << "\t\t2. Read" << endl;
-        cout << "\t\t3. Update" << endl;
-        cout << "\t\t4. Delete" << endl;
+        cout<< "\n\t\t1. Add a New Coffee Item" << endl;
+        cout << "\t\t2. Instant Display Coffee Item" << endl;
+        cout << "\t\t3. Update Coffee Item" << endl;
+        cout << "\t\t4. Delete a Coffee Item" << endl;
         cout << "\t\t5. Total Earning" << endl;
         cout << "\t\t6. View Sales History" << endl;
         cout << "\t\t7. Best Customer" << endl;
@@ -242,7 +242,7 @@ void bestBuy() {
 
     saleElement *bestUser = bestCustomer(U2);
 
-    cout << "\nOur Best Customer is " << bestUser->userId << " spending $ " << bestUser->coffeePrice << endl;
+    cout << "\n\n\t\tOur Best Customer is " << bestUser->userId << " spending $ " << bestUser->coffeePrice << endl;
 }
 
 void bestItem() {
@@ -254,7 +254,7 @@ void bestItem() {
     readCoffeeList(ls);
     coffeeElement *item = searchItem(ls, bestCoffee->coffeeId);
 
-    cout << "\nBest Item: " << bestCoffee->coffeeId << "." << item->name <<  ", Quantity: " << bestCoffee->qty << endl;
+    cout << "\n\n\t\tBest Item: " << bestCoffee->coffeeId << "." << item->name <<  ", Quantity: " << bestCoffee->qty << endl;
 }
 
 void removeAllCoffeeItem() {
