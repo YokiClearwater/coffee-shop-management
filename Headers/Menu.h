@@ -17,7 +17,7 @@ void mainMenu(UserInfo *ul) {
         sleepTime(200);
         cout<<"\n\t\t1. Ordering Coffee\n\t\t2. Admin Panel\n\t\t3. Back\n\n";
         sleepTime(200);
-        cout<<"\t\tEnter Choice (1 - 3):  ";
+        cout<<"\t\tEnter Choice:  ";
         // cin >> choice;
         errorInputHandling(&choice);
 
@@ -125,7 +125,7 @@ void buyCoffee(UserInfo *ul) {
             cout<<"\t\t----------------------------------------------\n";
             cout<<"\t\t\tOverall price to pay is $" << invoicePrice <<"\n";
             cout<<"\n\t\t#### Thank you for ordering our drinks ####\n";
-            int cc; cout <<"\t\t\tPress any number to go back to costumer panel: ";
+            int cc; cout <<"\t\t\tPress any number to go back to main menu: ";
             errorInputHandling(&cc);
             break;
         }
@@ -155,7 +155,7 @@ void adminPanel() {
 
         coffeeList *ls = createCoffeeList();
         readCoffeeList(ls);
-        cout<<"\t\tEnter Choice (1 - 3):  ";
+        cout<<"\t\tEnter Choice:  ";
         errorInputHandling(&choice);
 
         if(choice) {
