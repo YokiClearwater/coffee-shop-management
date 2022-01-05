@@ -108,7 +108,8 @@ void loadingbar() {
             cout << b;
             sleepTime(100);
         }
-    #else
+    #endif
+    #ifdef __unix__
         for (int i=15;i<=100;i+=5){
             clearScreen();
             cout << "\n\n\n\n\n\n\n\t\t\t\t";
