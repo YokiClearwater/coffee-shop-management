@@ -92,34 +92,40 @@ bool checkSpace(string str) {
     return false;
 }
 
-void loadingbar()
-{
-    clearScreen();
-    // Initialize char for printing
-    // loading bar
-    char a = 177, b = 219;
+void loadingbar() {
+    #ifdef _WIN32
+        clearScreen();
+        char a = 177, b = 219;
+        cout << "\n\n\n\n";
+        cout << "\n\n\n\n\t\t\t\t\t" << "Loading...\n\n";
+        cout << "\t\t\t\t\t";
+        for (int i = 0; i < 26; i++)
+            cout << a;
+        cout << "\r";
+        cout << "\t\t\t\t\t";
 
-    cout << "\n\n\n\n";
-    cout << "\n\n\n\n\t\t\t\t\t" << "Loading...\n\n";
-    cout << "\t\t\t\t\t";
+        for (int i = 0; i < 26; i++) {
+            cout << b;
+            sleepTime(100);
+        }
+    #else
+        for (int i=15;i<=100;i+=5){
+		clearScreen();
+		cout << "\n\n\n\n\n\n\n\t\t\t\t";
+		cout << i << "%% Loading...\n\n\t\t";
 
-    // Print initial loading bar
-    for (int i = 0; i < 26; i++)
-        cout << a;
+		cout << "");
 
-    // Set the cursor again starting
-    // point of loading bar
-    cout << "\r";
-    cout << "\t\t\t\t\t";
-
-    // Print loading bar progress
-    for (int i = 0; i < 26; i++) {
-        cout << b;
-
-        // Sleep
-        sleepTime(100);
-    }
+		for (int j=0; j<i;j+=2){
+			cout << " ";
+		}
+		sleepTime(100);
+		if(i==90 || i==50 || i==96 || i==83){
+			sleepTime(100);
+		}
+    #endif
 }
+    
 
 string userNameInput() {
     string name;
