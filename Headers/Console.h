@@ -110,19 +110,18 @@ void loadingbar() {
         }
     #else
         for (int i=15;i<=100;i+=5){
-		clearScreen();
-		cout << "\n\n\n\n\n\n\n\t\t\t\t";
-		cout << i << "%% Loading...\n\n\t\t";
-
-		cout << "");
-
-		for (int j=0; j<i;j+=2){
-			cout << " ";
-		}
-		sleepTime(100);
-		if(i==90 || i==50 || i==96 || i==83){
-			sleepTime(100);
-		}
+            clearScreen();
+            cout << "\n\n\n\n\n\n\n\t\t\t\t";
+            cout << i << "%% Loading...\n\n\t\t";
+            cout << "";
+            for (int j=0; j<i;j+=2){
+                cout << " ";
+            }
+            sleepTime(100);
+            if(i==90 || i==50 || i==96 || i==83){
+                sleepTime(100);
+            }
+	    }
     #endif
 }
     
