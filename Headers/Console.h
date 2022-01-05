@@ -1,18 +1,22 @@
 #include <cstdlib>
-#include <chrono>
-#include <thread>
+#include <typeinfo>
 using namespace std;
 
 #ifdef _WIN32
 #include <conio.h>
+#include "windows.h"
 #endif
 #ifdef __unix__
 #include <unistd.h>
 #endif
 
+bool checkSpace(string);
+string userNameInput();
+
+
 void clearScreen()
 {
-    #ifdef WINDOWS
+    #ifdef _WIN32
         std::system("cls");
     #else
         std::system ("clear");
@@ -20,35 +24,16 @@ void clearScreen()
 }
 
 void sleepTime(int ms) {
-    std::this_thread::sleep_for(std::chrono::milliseconds(ms));
-}
-
-void loadingbar(void){
-
-	for (int i=15;i<=100;i+=5){
-
-		clearScreen();
-
-		printf("\n\n\n\n\n\n\n\t\t\t\t");
-		printf("%d %% Loading...\n\n\t\t",i);
-
-		printf("");
-
-		for (int j=0; j<i;j+=2){
-			cout << " ";
-		}
-		sleepTime(100);
-		if(i==90 || i==50 || i==96 || i==83){
-			sleepTime(100);
-		}
-
-	}
-
+    #ifdef _WIN32
+        Sleep(ms);
+    #else
+        usleep(ms)
+    #endif
 }
 
 void waitForInput() {
 	do {
-		std::cout << '\n' << "\t\tPress a key to continue...";
+		std::cout << '\n' << "\t\tPress ENTER to continue...";
 		cin.get();
 	} while (cin.get() != '\n');
 }
@@ -63,7 +48,7 @@ void errorInputHandling(int *choice) {
 
 #ifdef _WIN32
 string getPassword()
-{ 
+{
     string password;
     int ch;
 
@@ -91,8 +76,58 @@ void inputPass(string *password, const char *prompt) {
     cout << prompt;
     *password = getPassword();
     #endif
-    
+
     #ifdef __unix__
     *password = getpass(prompt);
     #endif
+}
+
+bool checkSpace(string str) {
+    for(int i = 0; i < str.size(); i++) {
+        if(isspace(str[i])) {
+            return true;
+            break;
+        }
+    }
+    return false;
+}
+
+void loadingbar()
+{
+    clearScreen();
+    // Initialize char for printing
+    // loading bar
+    char a = 177, b = 219;
+
+    cout << "\n\n\n\n";
+    cout << "\n\n\n\n\t\t\t\t\t" << "Loading...\n\n";
+    cout << "\t\t\t\t\t";
+
+    // Print initial loading bar
+    for (int i = 0; i < 26; i++)
+        cout << a;
+
+    // Set the cursor again starting
+    // point of loading bar
+    cout << "\r";
+    cout << "\t\t\t\t\t";
+
+    // Print loading bar progress
+    for (int i = 0; i < 26; i++) {
+        cout << b;
+
+        // Sleep
+        sleepTime(100);
+    }
+}
+
+string userNameInput() {
+    string name;
+    getline(cin, name);
+    while(checkSpace(name)) {
+        cout << "\t\tUsername cannot contain space." << endl;
+        cout << "\t\tEnter again: ";
+        getline(cin, name);
+    }
+    return name;
 }

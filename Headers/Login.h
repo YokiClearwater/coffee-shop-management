@@ -154,13 +154,15 @@ void signUp(UserList *ls) {
     string username, password, confirmPass;
     
         cout << "\t\tEnter Username: ";
-        cin >> username;
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        username = userNameInput();
+        
         UserInfo *checkUsername = searchUserInfo(ls, username);
 
         while(checkUsername != NULL) {
             cout<<"\t\tThis user name is already taken." << endl;
             cout << "\t\tEnter another username: ";
-            cin >> username;
+            username = userNameInput();
             checkUsername = searchUserInfo(ls, username);
         }
 
@@ -187,23 +189,29 @@ UserInfo *logIn() {
     string userName, password;
 
     cout << "\t\tEnter Username: ";
-    cin >> userName;
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    userName = userNameInput();
     // cout << "\t\tEnter Password: ";
     // cin >> password;
     inputPass(&password, "\t\tEnter Password: ");
     password = SHA256::encrypt(password + salt);
 
     UserInfo *U1 = searchUserInfo(LL, userName);
+    int attempt = 0;
     while(true) {
         if(U1 != NULL && password == U1->pword) {
             break;
         }
         else {
+            if(attempt == 3) {
+                cout << "Login Failed, If you are a new User, Please Sign Up";
+                waitForInput();
+                return NULL;
+            }
+            attempt++;
             cout << "\t\tIncorrect Username or Password!! Enter Again!!" << endl;
             cout << "\t\tEnter Username: ";
-            cin >> userName;
-            // cout << "\t\tEnter Password: ";
-            // cin >> password;
+            userName = userNameInput();
             inputPass(&password, "\t\tEnter Password: ");
             password = SHA256::encrypt(password + salt);
             U1 = searchUserInfo(LL, userName);
