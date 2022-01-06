@@ -126,7 +126,6 @@ void loadingbar() {
     #endif
 }
     
-
 string userNameInput() {
     string name;
     getline(cin, name);
@@ -136,4 +135,17 @@ string userNameInput() {
         getline(cin, name);
     }
     return name;
+}
+
+void delayPrint(string str) {
+    clearScreen();
+    cout<<"\n\t\t";
+    int n = str.size();
+    sleepTime(500);
+    for(int i = 0; i < n; i++)
+    {
+        cout << str[i] << flush;
+        sleepTime(70);
+    }
+    cout << "\n\n";
 }

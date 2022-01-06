@@ -17,19 +17,10 @@ int main() {
 
     int choice;
     UserList *ul = readUserInfo("Data/UserInfo.txt");
+    string welcome = "***** WELCOME TO COFFEE MANAGEMENT SYSTEM *****";
+    delayPrint(welcome);
 
-    // string welcome = "\t***** WELCOME TO COFFEE MANAGEMENT SYSTEM *****";
-    // clearScreen();
-    // cout<<"\n\t";
-    // int n = welcome.size();
-    // sleepTime(500);
-    // for(int ii = 0; ii < n; ii++)
-    // {
-    //     cout << welcome[ii] << flush;
-    //     sleepTime(70);
-    // }
-
-    // loadingbar();
+    loadingbar();
 
     do {
         choice = loginOrSignup();
@@ -41,6 +32,12 @@ int main() {
             if(U1) {
                 cout << "Login Successfully!!" << endl;
                 mainMenu(U1);
+            }
+            else {
+                clearScreen();
+                cout << "\n\t\tLogin Failed!!" << endl;
+                cout << "\n\t\tPress ENTER to continue....";
+                cin.get();
             }
         }
         else if(choice == 2) {

@@ -153,6 +153,7 @@ int loginOrSignup(){
 void signUp(UserList *ls) {
     string username, password, confirmPass;
     bool flag = true;
+    delayPrint("Sign Up A New Account: ");
     
         cout << "\t\tEnter Username: ";
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -188,6 +189,9 @@ void signUp(UserList *ls) {
 
     // condition not to add empty username or password to files.
     if(flag == false  || username.size() == 0) {
+        cout << "\n\t\tSigned Up Failed!!!" << endl;
+        cout << "\n\t\tPress ENTER to continue....";
+        cin.get();
         return;
     }
     else {
@@ -199,6 +203,9 @@ void signUp(UserList *ls) {
 UserInfo *logIn() {
     UserList *LL = readUserInfo("Data/UserInfo.txt");
     string userName, password;
+
+    delayPrint("Logging In: ");
+
 
     cout << "\t\tEnter Username: ";
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -228,7 +235,6 @@ UserInfo *logIn() {
             U1 = searchUserInfo(LL, userName);
         }
     }
-
     return U1;
 }
 
