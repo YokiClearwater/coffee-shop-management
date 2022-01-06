@@ -179,7 +179,7 @@ void updateCoffee(coffeeList *ls, string itemID) {
             temp->name = newName;
         }
         else if(choice == 2) {
-            cout << "\t\tEnter Price Name: ";
+            cout << "\t\tEnter Item Price: ";
             cin >> newPrice;
             temp->price = newPrice;
         }
@@ -187,7 +187,7 @@ void updateCoffee(coffeeList *ls, string itemID) {
             cout << "\t\tEnter Item Name: ";
             cin >> newName;
             temp->name = newName;
-            cout << "\t\tEnter Price Name: ";
+            cout << "\t\tEnter Item Price: ";
             cin >> newPrice;
             temp->price = newPrice;
         }

@@ -98,7 +98,7 @@ void saleWriteTotalCash(saleList *ls) {
         sale = sale->next;
     }
 
-    cout << "The total sales in cash is: $" << totalCash << endl;
+    cout << "\n\n\t\tThe total sales in cash is: $" << totalCash << endl;
 }
 
 saleElement *bestCustomer(saleList *ul) {
@@ -217,14 +217,12 @@ void readSSV(ifstream &file, map<string, UserHistory> &user) {
     int qty;
     float price;
     
-    while(!file.eof())
+    while(file >> uid >> cid >> qty >> price)
     {
-        file>>uid>>cid>>qty>>price;
         if(user.find(uid) == user.end()){
             user[uid] = UserHistory(uid);
             // cout << "UID: " << uid << endl;
         }
-
         add(user[uid], cid, qty, price);
     }
 }
@@ -238,7 +236,7 @@ void viewUserSaleHistory() {
     readCoffeeList(ls);
     
     
-    cout << "Name\tCoffee ID" << setw(15)  << "Coffee Name" << setw(8); 
+    cout << "\t\tName\t" << setw(13) << "Coffee ID" << setw(15)  << "Coffee Name" << setw(7); 
     cout << "QTY" <<   setw(11) << "Price" << endl;
     string repeatUid;
     for(pair<const string,UserHistory> &tmpUser : users){ 
@@ -246,14 +244,14 @@ void viewUserSaleHistory() {
         for(pair<const string, pair<int, float>> &tmpItem: tmpUser.second.history){
             string coffeeID = tmpItem.first;
             if(repeatUid != tmpUser.first){
-                cout<<"\n";
+                cout<<"\n\t\t";
                 cout << tmpUser.first << "\t   ";
             } else{
-                cout<< "\t   ";
+                cout<< "\t\t\t   ";
             }
             item = searchItem(ls, coffeeID);
 
-            cout <<tmpItem.first<< setw(17) << item->name << setw(10) << tmpItem.second.first; 
+            cout << "\t" << tmpItem.first<< setw(17) << item->name << setw(9) << tmpItem.second.first; 
             cout << setw(10) << tmpItem.second.second << " $ "<<endl;
             repeatUid = tmpUser.first;
         }

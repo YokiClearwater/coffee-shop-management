@@ -152,6 +152,7 @@ int loginOrSignup(){
 
 void signUp(UserList *ls) {
     string username, password, confirmPass;
+    bool flag = true;
     
         cout << "\t\tEnter Username: ";
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -170,18 +171,29 @@ void signUp(UserList *ls) {
             // cout << "\t\tCreate your own password: ";
             // cin >> password;
             inputPass(&password, "\t\tCreate your own password: ");
+            if(password.size() == 0) {
+                flag = false;
+            }
             password = SHA256::encrypt(password + salt);
-            // cout << "\t\tConfirm password: ";
-            // cin >> confirmPass;
+
             inputPass(&confirmPass, "\t\tConfirm password: ");
             confirmPass = SHA256::encrypt(confirmPass + salt);
+            
+            
+
             if (password != confirmPass) {
                 cout << "\t\tPassword Doesn't Match!! Try Again!!" << endl;
             }
         }   while(password != confirmPass);
 
-    addEnd(ls, username, password);
-    writeUserInfo(ls, "Data/UserInfo.txt");
+    // condition not to add empty username or password to files.
+    if(flag == false  || username.size() == 0) {
+        return;
+    }
+    else {
+        addEnd(ls, username, password);
+        writeUserInfo(ls, "Data/UserInfo.txt");
+    }
 }
 
 UserInfo *logIn() {
