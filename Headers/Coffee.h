@@ -139,6 +139,7 @@ void createCoffee(coffeeList *ls) {
         cout << "\t\tEnter ID: ";
         id = stringInput();
     }
+    if(id.size() == 0) {return;}
 
     coffeeElement *item = searchItem(ls, id);
 
@@ -151,10 +152,11 @@ void createCoffee(coffeeList *ls) {
 
     cout << "\t\tEnter Coffee's Name: ";
     coffeename = stringInput();
+    if(coffeename.size() == 0) {return;}
     cout << "\t\tEnter Coffee's Price: ";
     cin >> price;
 
-    if(price == 0 || coffeename.size() == 0 || id.size() == 0) {
+    if(price == 0) {
         return;
     }
 

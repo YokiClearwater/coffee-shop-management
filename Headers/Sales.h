@@ -236,8 +236,6 @@ void viewUserSaleHistory() {
     readCoffeeList(ls);
     
     int width = longestUserName() + 10;
-    // cout << "\t\tName\t" << setw(13) << "Coffee ID" << setw(15)  << "Coffee Name" << setw(7); 
-    // cout << "QTY" <<   setw(11) << "Price" << endl;
     cout << setw(width) << "Username" << setw(width) << "Coffee ID" << setw(20) << "Coffee Name";
     cout << setw(10) << "QTY" << setw(12) << "Price" << endl;
 
