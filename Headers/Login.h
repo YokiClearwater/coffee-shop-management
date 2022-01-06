@@ -135,7 +135,7 @@ int loginOrSignup(){
     cout << welcome << endl;
     
     sleepTime(200);
-    cout<<"\n\t\t1. Login\n\t\t2. Sign up\n\t\t3. Exit\n\n";
+    cout<<"\n\t\t1. Login\n\t\t2. Sign up\n\t\t3. ReadMe/Help\n\t\t4. Exit\n\n";
     sleepTime(200);
     do
     {
@@ -145,7 +145,7 @@ int loginOrSignup(){
             errorInputHandling(&cc);
         }
 
-    }   while(cc < 1 || cc > 3);
+    }   while(cc < 1 || cc > 4);
 
     return cc;
 }
@@ -169,8 +169,6 @@ void signUp(UserList *ls) {
         }
 
         do {
-            // cout << "\t\tCreate your own password: ";
-            // cin >> password;
             inputPass(&password, "\t\tCreate your own password: ");
             if(password.size() == 0) {
                 flag = false;

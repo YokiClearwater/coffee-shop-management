@@ -112,7 +112,7 @@ void buyCoffee(UserInfo *ul) {
             cout<<"\n\t\tWe are printing our invoice";
             for(int ii=1; ii <= 10; ii++)
             {
-                cout<<". ";
+                cout<< ". " << flush;
                 sleepTime(300);
             }
             cout<<"\n\n\t\t  "<<"Drink(s)"<<setw(19)<<"Quantity"<<setw(19)<<"Price($)\n";

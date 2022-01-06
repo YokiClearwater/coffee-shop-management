@@ -110,19 +110,25 @@ void loadingbar() {
         }
     #endif
     #ifdef __unix__
-        for (int i=15;i<=100;i+=5){
-            clearScreen();
-            cout << "\n\n\n\n\n\n\n\t\t\t\t";
-            cout << i << "%% Loading...\n\n\t\t";
-            cout << "";
-            for (int j=0; j<i;j+=2){
-                cout << " ";
+        float progress = 0.0;
+        clearScreen();
+        cout << "\n\n";
+        while (progress < 1.0) {
+            cout << "\t\t";
+            int barWidth = 70;
+            cout << "[";
+            int pos = barWidth * progress;
+            for (int i = 0; i < barWidth; ++i) {
+                if (i < pos) cout << "=";
+                else if (i == pos) cout << ">";
+                else cout << " ";
             }
-            sleepTime(100);
-            if(i==90 || i==50 || i==96 || i==83){
-                sleepTime(100);
-            }
-	    }
+            sleepTime(70);
+            cout << "] " << int(progress * 100.0) << " %\r";
+            cout.flush();
+            progress += 0.02; // for demonstration only
+        }
+    cout << endl;
     #endif
 }
     
@@ -148,4 +154,15 @@ void delayPrint(string str) {
         sleepTime(70);
     }
     cout << "\n\n";
+}
+
+void helpUser() {
+    ifstream file;
+    file.open("README.md");
+    string str;
+
+    while(getline(file, str)) {
+        cout << str << endl;
+    }
+    file.close();
 }

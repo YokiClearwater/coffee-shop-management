@@ -10,6 +10,11 @@
 #include "Headers/Menu.h"
 using namespace std;
 
+// IF YOU WANT TO LOGIN AS ADMINISTRATOR
+// USERNAME: admin
+// Password: admin
+
+
 int main() {
     #ifdef _WIN32
         std::system("color 0A");
@@ -24,9 +29,9 @@ int main() {
 
     do {
         choice = loginOrSignup();
-    } while(choice < 1 || choice > 3);
+    } while(choice < 1 || choice > 4);
 
-    while(choice >= 1 && choice <= 2) {
+    while(choice >= 1 && choice <= 3) {
         if(choice == 1) {
             UserInfo *U1 = logIn();
             if(U1) {
@@ -42,6 +47,11 @@ int main() {
         }
         else if(choice == 2) {
             signUp(ul);
+        }
+        else if(choice == 3) {
+            clearScreen();
+            helpUser();
+            waitForInput();
         }
         choice = loginOrSignup();
     }
