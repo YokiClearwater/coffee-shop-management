@@ -130,34 +130,47 @@ void displayCoffeeList(coffeeList *ls) {
 void createCoffee(coffeeList *ls) {
     string id, coffeename;
     float price;
-    cout << "Enter ID: ";
-    cin >> id;
+    cout << "\t\tEnter ID: ";
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    id = stringInput();
+
+    while(!digitCheck(id)) {
+        cout << "\t\tID must be digit." << endl;
+        cout << "\t\tEnter ID: ";
+        id = stringInput();
+    }
 
     coffeeElement *item = searchItem(ls, id);
 
     while(item != NULL) {
-        cout << "ID exists!\nPlease enter the new ID!\n";
-        cout << "Enter ID: ";
-        cin >> id;
+        cout << "\t\tID exists!\n\t\tPlease enter the new ID!\n";
+        cout << "\t\tEnter ID: ";
+        id = stringInput();
         item = searchItem(ls, id);
     }
 
-    cout << "Enter Coffee's Name: ";
-    cin >> coffeename;
-    cout << "Enter Coffee's Price: ";
+    cout << "\t\tEnter Coffee's Name: ";
+    coffeename = stringInput();
+    cout << "\t\tEnter Coffee's Price: ";
     cin >> price;
+
+    if(price == 0 || coffeename.size() == 0 || id.size() == 0) {
+        return;
+    }
+
     insertCoffeeEnd(ls, id, coffeename, price);
     writeCoffeeList(ls);
 }
 
 void updateCoffee(coffeeList *ls, string itemID) {
     cout << "\t\tEnter ID to Search: ";
-    cin >> itemID;
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    itemID = stringInput();
 
     coffeeElement *temp = searchItem(ls, itemID);
     while(temp == NULL) {
         cout << "\t\tItem Not Found!! Enter ID Again: ";
-        cin >> itemID;
+        itemID = stringInput();
         temp = searchItem(ls, itemID);
     }
 
@@ -175,20 +188,22 @@ void updateCoffee(coffeeList *ls, string itemID) {
         cin >> choice;
         if(choice == 1) {
             cout << "\t\tEnter Item Name: ";
-            cin >> newName;
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            newName = stringInput();
             temp->name = newName;
         }
         else if(choice == 2) {
             cout << "\t\tEnter Item Price: ";
-            cin >> newPrice;
+            errorInputHandling(&newPrice);
             temp->price = newPrice;
         }
         else if(choice == 3) {
             cout << "\t\tEnter Item Name: ";
-            cin >> newName;
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            newName = stringInput();
             temp->name = newName;
             cout << "\t\tEnter Item Price: ";
-            cin >> newPrice;
+            errorInputHandling(&newPrice);
             temp->price = newPrice;
         }
         else {
@@ -196,6 +211,15 @@ void updateCoffee(coffeeList *ls, string itemID) {
         }
 
     } while(choice != 4);
+
+    if(newPrice == 0) {
+        cout << "\t\tPrice can't be zero." << endl;
+        return;
+    }
+
+    if(newName.size() == 0) {
+        return;
+    }
 
     writeCoffeeList(ls);
 }

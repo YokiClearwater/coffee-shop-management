@@ -11,8 +11,7 @@ using namespace std;
 #endif
 
 bool checkSpace(string);
-string userNameInput();
-
+string stringInput();
 
 void clearScreen()
 {
@@ -38,7 +37,8 @@ void waitForInput() {
 	} while (cin.get() != '\n');
 }
 
-void errorInputHandling(int *choice) {
+template <typename T>
+void errorInputHandling(T *choice) {
 	while (!(cin >> *choice)) {
 		cin.clear();
 		cout << "\t\tBad Entry!!! Input Again: ";
@@ -115,7 +115,7 @@ void loadingbar() {
         cout << "\n\n\n\n\n\n\n";
         while (progress < 1.0) {
             cout << "\t\t";
-            int barWidth = 70;
+            int barWidth = 50;
             std::cout << "[";
             int pos = barWidth * progress;
             for (int i = 0; i < barWidth; ++i) {
@@ -132,11 +132,11 @@ void loadingbar() {
     #endif
 }
     
-string userNameInput() {
+string stringInput() {
     string name;
     getline(cin, name);
     while(checkSpace(name)) {
-        cout << "\t\tUsername cannot contain space." << endl;
+        cout << "\t\tString cannot contain space. Try replacing space with _ or -." << endl;
         cout << "\t\tEnter again: ";
         getline(cin, name);
     }
@@ -165,4 +165,13 @@ void helpUser() {
         cout << str << endl;
     }
     file.close();
+}
+
+bool digitCheck(string str) {
+    for(int i = 0; i < str.size(); i++) {
+        if(!isdigit(str[i])) {
+            return false;
+        }
+    }
+    return true;
 }

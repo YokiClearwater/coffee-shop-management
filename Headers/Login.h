@@ -157,14 +157,14 @@ void signUp(UserList *ls) {
     
         cout << "\t\tEnter Username: ";
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        username = userNameInput();
+        username = stringInput();
         
         UserInfo *checkUsername = searchUserInfo(ls, username);
 
         while(checkUsername != NULL) {
             cout<<"\t\tThis user name is already taken." << endl;
             cout << "\t\tEnter another username: ";
-            username = userNameInput();
+            username = stringInput();
             checkUsername = searchUserInfo(ls, username);
         }
 
@@ -207,7 +207,7 @@ UserInfo *logIn() {
 
     cout << "\t\tEnter Username: ";
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    userName = userNameInput();
+    userName = stringInput();
 
     inputPass(&password, "\t\tEnter Password: ");
     password = SHA256::encrypt(password + salt);
@@ -227,7 +227,7 @@ UserInfo *logIn() {
             cout << "\t\tYou have " << (flag - attempt) << " attempt left." << endl;
 
             cout << "\t\tEnter Username: ";
-            userName = userNameInput();
+            userName = stringInput();
             inputPass(&password, "\t\tEnter Password: ");
             password = SHA256::encrypt(password + salt);
             U1 = searchUserInfo(LL, userName);
@@ -282,4 +282,19 @@ bool verifyAdmin(string name) {
         return true;
     }
     return false;
+}
+
+int longestUserName() {
+    UserList *ul = readUserInfo("Data/UserInfo.txt");
+    UserInfo *temp, *max;
+    temp = max = ul->head;
+
+    while(temp != NULL) {
+        if(temp->userName > max->userName) {
+            max = temp;
+        }
+        temp = temp->next;
+    }
+    
+    return max->userName.size();
 }

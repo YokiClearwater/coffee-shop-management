@@ -9,3 +9,8 @@ Kosal	1	2	7
 Kosal	1	2	7
 Kosal	2	2	4
 Kosal	1	2	7
+admin	2	2	4
+yoki_clearwater	5	4	12
+yoki_clearwater	4	2	4
+yoki_clearwater	4	3	6
+

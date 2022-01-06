@@ -17,7 +17,7 @@ void mainMenu(UserInfo *ul) {
         sleepTime(200);
         cout<<"\n\t\t1. Ordering Coffee\n\t\t2. Admin Panel\n\t\t3. Back\n\n";
         sleepTime(200);
-        cout<<"\t\tEnter Choice:  ";
+        cout<<"\t\tEnter Choice: ";
         // cin >> choice;
         errorInputHandling(&choice);
 
@@ -69,7 +69,7 @@ void buyCoffee(UserInfo *ul) {
         coffeeElement *item = searchItem(menu, coffeeID);
         
         while(item == NULL) {
-            cout << "ID Not Found!! Enter Again: ";
+            cout << "\n\t\tID Not Found!! Enter Again: ";
             cin >> coffeeID;
             item = searchItem(menu, coffeeID);
         }
@@ -149,13 +149,13 @@ void adminPanel() {
         cout << "\t\t7. Best Customer" << endl;
         cout << "\t\t8. Most Sale Items" << endl;
         cout << "\t\t9. View Registered User" << endl;
-        cout << "\t\t10. Add another administrator" << endl;
+        cout << "\t\t10. Add Another Administrator" << endl;
         cout << "\t\t11. Delete All Coffee Item" << endl;
         cout << "\t\t12. Back\n\n" << endl;
 
         coffeeList *ls = createCoffeeList();
         readCoffeeList(ls);
-        cout<<"\t\tEnter Choice:  ";
+        cout<<"\t\tEnter Choice: ";
         errorInputHandling(&choice);
 
         if(choice) {
@@ -266,10 +266,10 @@ void removeAllCoffeeItem() {
         readCoffeeList(ls);
         deleteAllCoffees(ls);
         writeCoffeeList(ls);
-        cout << "All coffee items in the menu are deleted!!" << endl;
+        cout << "\t\tAll coffee items in the menu are deleted!!" << endl;
     }
     else if(str == "N" || str == "n" || str == "no" || str == "NO") {
-        cout << "Any item wasn't deleted." << endl;
+        cout << "\t\tAny of the items wasn't deleted." << endl;
     }
     else {
         cout << "\t\tDelete Failed!!!" << endl;

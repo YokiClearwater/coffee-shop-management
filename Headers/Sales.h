@@ -235,24 +235,31 @@ void viewUserSaleHistory() {
     coffeeList *ls = createCoffeeList();
     readCoffeeList(ls);
     
-    
-    cout << "\t\tName\t" << setw(13) << "Coffee ID" << setw(15)  << "Coffee Name" << setw(7); 
-    cout << "QTY" <<   setw(11) << "Price" << endl;
+    int width = longestUserName() + 10;
+    // cout << "\t\tName\t" << setw(13) << "Coffee ID" << setw(15)  << "Coffee Name" << setw(7); 
+    // cout << "QTY" <<   setw(11) << "Price" << endl;
+    cout << setw(width) << "Username" << setw(width) << "Coffee ID" << setw(20) << "Coffee Name";
+    cout << setw(10) << "QTY" << setw(12) << "Price" << endl;
+
     string repeatUid;
     for(pair<const string,UserHistory> &tmpUser : users){ 
         coffeeElement *item = new coffeeElement();      
         for(pair<const string, pair<int, float>> &tmpItem: tmpUser.second.history){
             string coffeeID = tmpItem.first;
+            width = longestUserName() + 10;
             if(repeatUid != tmpUser.first){
-                cout<<"\n\t\t";
-                cout << tmpUser.first << "\t   ";
+                cout<< "\n";
+                cout << setw(width);
+                cout << tmpUser.first;
             } else{
-                cout<< "\t\t\t   ";
+                cout << setw(width);
+                cout << "\n";
+                width = width*2;
             }
             item = searchItem(ls, coffeeID);
 
-            cout << "\t" << tmpItem.first<< setw(17) << item->name << setw(9) << tmpItem.second.first; 
-            cout << setw(10) << tmpItem.second.second << " $ "<<endl;
+            cout << setw(width) << tmpItem.first<< setw(20) << item->name << setw(10) << tmpItem.second.first; 
+            cout << setw(10) << tmpItem.second.second << " $ ";
             repeatUid = tmpUser.first;
         }
     }
