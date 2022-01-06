@@ -163,25 +163,19 @@ void adminPanel() {
         }
 
         if(choice == 1) {
-            // clearScreen();
             displayCoffeeList(ls);
             createCoffee(ls);
-            // adminPanel();
         }
         else if(choice == 2) {
-            // clearScreen();
             displayCoffeeList(ls);
             waitForInput();
-            // adminPanel();
         }
         else if(choice == 3) {
-            // clearScreen();
             displayCoffeeList(ls);
             updateCoffee(ls, itemID);
             // adminPanel();
         }
         else if(choice == 4) {
-            // clearScreen();
             displayCoffeeList(ls);
             deleteCoffee(ls, itemID);
             clearScreen();
@@ -191,28 +185,23 @@ void adminPanel() {
             waitForInput();
         }
         else if(choice == 5) {
-            // clearScreen();
             saleList *sl = readSaleHistory();
             saleWriteTotalCash(sl);
             waitForInput();
         }
         else if(choice == 6) {
-            // clearScreen();
             viewUserSaleHistory();
             waitForInput();
         }
         else if(choice == 7) {
-            // clearScreen();
             bestBuy();
             waitForInput();
         }
         else if(choice == 8) {
-            // clearScreen();
             bestItem();
             waitForInput();
         }
         else if(choice == 9) {
-            // clearScreen();
             displayRegisteredUser();
             waitForInput();
         }

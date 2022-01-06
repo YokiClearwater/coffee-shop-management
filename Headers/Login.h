@@ -239,9 +239,7 @@ UserInfo *logIn() {
 void displayRegisteredUser() {
     UserList *ul = readUserInfo("Data/UserInfo.txt");
     UserInfo *temp = ul->head;
-
-    cout << "\t\tRegistered Users: " << endl;
-    cout << "\t\t------------------------" << endl;
+    delayPrint("Registered Users: \n\t\t------------------------");
     while(temp != NULL) {
         cout << "\t\t" << temp->userName << endl;
         temp = temp->next;
@@ -252,13 +250,22 @@ void displayRegisteredUser() {
 void addAdmin() {
     UserList *ul = readUserInfo("Data/UserInfo.txt");
     string name;
+    delayPrint("Adding a new administrator");
 
     cout << "\t\tEnter Username: ";
-    cin >> name;
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    name = stringInput();
+
+    if(name.size() == 0) {
+        cout << "\t\tFailed!! Name Input was Empty!!";
+        cin.get();
+        return;
+    }
+
     UserInfo *user = searchUserInfo(ul, name);
     while(user == NULL) {
         cout << "\t\tUser not found. Enter Again: ";
-        cin >> name;
+        name = stringInput();
         user = searchUserInfo(ul, name);
     }
 
