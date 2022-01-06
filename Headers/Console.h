@@ -112,23 +112,23 @@ void loadingbar() {
     #ifdef __unix__
         float progress = 0.0;
         clearScreen();
-        cout << "\n\n";
+        cout << "\n\n\n\n\n\n\n";
         while (progress < 1.0) {
             cout << "\t\t";
             int barWidth = 70;
-            cout << "[";
+            std::cout << "[";
             int pos = barWidth * progress;
             for (int i = 0; i < barWidth; ++i) {
-                if (i < pos) cout << "=";
-                else if (i == pos) cout << ">";
-                else cout << " ";
+                if (i < pos) std::cout << "=";
+                else if (i == pos) std::cout << ">";
+                else std::cout << " ";
             }
-            sleepTime(70);
-            cout << "] " << int(progress * 100.0) << " %\r";
-            cout.flush();
-            progress += 0.02; // for demonstration only
+            sleepTime(50);
+            std::cout << "] " << int(progress * 100.0) << " %\r";
+            std::cout.flush();
+            progress += 0.03; // for demonstration only
         }
-    cout << endl;
+        std::cout << std::endl;
     #endif
 }
     
